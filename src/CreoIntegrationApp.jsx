@@ -1518,7 +1518,7 @@ const NavRow = ({ onBack, onNext, nextLabel, nextDisabled, dark }) => (
 // ─── STEPPER ─────────────────────────────────────────────────────────────────
 const STEPS = [
   { id: 1, label: "Job Config"   }, { id: 2, label: "Product Draw" },
-  { id: 3, label: "1E Specs"     }, { id: 4, label: "Review"       },
+  { id: 3, label: "Drawing Specs"     }, { id: 4, label: "Review"       },
   { id: 5, label: "AI Run"       },
 ];
 
@@ -1642,7 +1642,7 @@ const Page2 = ({ data, onChange, onNext, onBack, dark }) => {
           <Field label="R.P. Change Number" dark={dark}><Input value={data.rpChangeNumber} onChange={e=>onChange("rpChangeNumber",e.target.value)} placeholder="R.P. Change Number" dark={dark}/></Field>
         </div>
       </Card>
-      <NavRow onBack={onBack} onNext={onNext} nextLabel="Next: 1E Specs →" dark={dark}/>
+      <NavRow onBack={onBack} onNext={onNext} nextLabel="Next: Drawing Specs →" dark={dark}/>
     </div>
   );
 };
@@ -1663,12 +1663,12 @@ const Page3 = ({ data, onChange, onNext, onBack, dark }) => {
     <div className="p-7 pb-20 max-w-5xl mx-auto">
       <div className="grid grid-cols-[1fr_268px] gap-5">
         <Card dark={dark}>
-          <SectionTitle dark={dark} sub="1E Spec on Model — specification codes">1E Specs</SectionTitle>
+          <SectionTitle dark={dark} sub="Drawing Specs — specification codes">Drawing Specs</SectionTitle>
           <div className={`border rounded-lg overflow-hidden ${dark?"border-neutral-800":"border-neutral-200"}`}>
             <table className="w-full border-collapse text-xs">
               <thead>
                 <tr className={dark?"bg-neutral-950":"bg-neutral-50"}>
-                  {["#","1E Spec ↕","Description","Note","Type",""].map((h,i)=>(
+                  {["#","Spec ↕","Description","Note","Type",""].map((h,i)=>(
                     <th key={i} className={`px-3 py-2.5 text-left text-[10px] font-extrabold uppercase tracking-widest border-b ${dark?"text-neutral-600 border-neutral-800":"text-neutral-400 border-neutral-200"}`}>{h}</th>
                   ))}
                 </tr>
@@ -1697,7 +1697,7 @@ const Page3 = ({ data, onChange, onNext, onBack, dark }) => {
           </div>
           <div className="flex gap-2 mt-4">
             <input value={newSpec} onChange={e=>setNewSpec(e.target.value)} onKeyDown={e=>e.key==="Enter"&&add()}
-              placeholder="Enter 1E Spec code and press Enter…"
+              placeholder="Enter Spec code and press Enter…"
               className={`flex-1 h-9 px-3 rounded-md border text-xs font-mono focus:outline-none focus:border-red-600
                 ${dark?"bg-neutral-900 border-neutral-700 text-white placeholder-neutral-600":"bg-white border-neutral-300 text-neutral-900 placeholder-neutral-400"}`}/>
             <BtnPrimary onClick={add} className="!px-4 !text-xs !py-0 h-9">+ Add</BtnPrimary>
@@ -1707,7 +1707,7 @@ const Page3 = ({ data, onChange, onNext, onBack, dark }) => {
           <Card dark={dark} className="!p-4">
             <SectionTitle dark={dark}>Required Specs</SectionTitle>
             <div className="flex flex-col gap-3">
-              {[["Drawing","drawing",["1E2722A","1E2300A","1E2100A"],true],["Branding","branding",["1E0198W","1E0199W","1E0200W"],true],["Confidentiality","confidentiality",["1E0013Y","1E0014Y","1E0015Y"],true],["Supplier Type","supplierType",["Customer 1","EXTERNAL","INTERNAL","OEM"],true]].map(([lbl,key,opts,req])=>(
+              {[["Drawing","drawing",["1E2722A","1E2300A","1E2100A"]],["Branding","branding",["1E0198W","1E0199W","1E0200W"]],["Confidentiality","confidentiality",["1E0013Y","1E0014Y","1E0015Y"]],["Supplier Type","supplierType",["Customer 1","EXTERNAL","INTERNAL","OEM"]]].map(([lbl,key,opts])=>(
                 <Field key={key} label={lbl} dark={dark}><Select value={reqSpecs[key]} onChange={e=>setReq(key,e.target.value)} options={opts} dark={dark}/></Field>
               ))}
               <Field label="High Priority To Brand" dark={dark}>
@@ -1756,7 +1756,7 @@ const Page4 = ({ job, modelName, onBack, onSubmit, submitting, dark }) => {
         <Card dark={dark}><SectionTitle dark={dark}>Job Configuration</SectionTitle><RRow label="Model Name" value={modelName} mono dark={dark}/><RRow label="Project" value={p1.projectName} dark={dark}/><RRow label="Customer" value={p1.customerName} dark={dark}/><RRow label="AI Model" value={p1.aiModel} dark={dark}/></Card>
         <Card dark={dark}><SectionTitle dark={dark}>Part Details</SectionTitle><RRow label="Part No." value={p2.partNumber} mono dark={dark}/><RRow label="Noun" value={p2.noun} dark={dark}/><RRow label="Modifier" value={p2.modifier} dark={dark}/><RRow label="Design Ctrl" value={p2.designControl} dark={dark}/><RRow label="Part Type" value={p2.partType} dark={dark}/><RRow label="Drawing Class" value={p2.drawingClass} dark={dark}/><RRow label="Weight" value={p2.weight?`${p2.weight} (${p2.weightType})`:""} dark={dark}/></Card>
         <Card dark={dark}><SectionTitle dark={dark}>Required Specs</SectionTitle><RRow label="Drawing" value={(p3.reqSpecs||{}).drawing} mono dark={dark}/><RRow label="Branding" value={(p3.reqSpecs||{}).branding} mono dark={dark}/><RRow label="Confidentiality" value={(p3.reqSpecs||{}).confidentiality} mono dark={dark}/><RRow label="Supplier Type" value={(p3.reqSpecs||{}).supplierType} dark={dark}/><RRow label="High Priority" value={(p3.reqSpecs||{}).highPriority?"Yes":"No"} dark={dark}/></Card>
-        <Card dark={dark}><SectionTitle dark={dark}>1E Specs ({(p3.specs||DEFAULT_SPECS).length} total)</SectionTitle>{(p3.specs||DEFAULT_SPECS).slice(0,6).map(s=><RRow key={s.id} label={s.spec} value={s.desc} mono dark={dark}/>)}{(p3.specs||DEFAULT_SPECS).length>6&&<p className={`text-[11px] mt-2 text-center ${dark?"text-neutral-600":"text-neutral-400"}`}>+{(p3.specs||DEFAULT_SPECS).length-6} more…</p>}</Card>
+        <Card dark={dark}><SectionTitle dark={dark}>Drawing Specs ({(p3.specs||DEFAULT_SPECS).length} total)</SectionTitle>{(p3.specs||DEFAULT_SPECS).slice(0,6).map(s=><RRow key={s.id} label={s.spec} value={s.desc} mono dark={dark}/>)}{(p3.specs||DEFAULT_SPECS).length>6&&<p className={`text-[11px] mt-2 text-center ${dark?"text-neutral-600":"text-neutral-400"}`}>+{(p3.specs||DEFAULT_SPECS).length-6} more…</p>}</Card>
       </div>
       <Card dark={dark}>
         <SectionTitle dark={dark} sub="Exact JSON that will POST to /api/jobs on submit">API Payload Preview</SectionTitle>
