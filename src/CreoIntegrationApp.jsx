@@ -1564,7 +1564,6 @@ const DEFAULT_SPECS = [
 
 // ─── WORKFLOW PAGES (1-5) ─────────────────────────────────────────────────────
 const Page1 = ({ data, onChange, modelName, onNext, dark, customers = [] }) => {
-  const valid = data.customerName && data.aiModel && data.projectName;
   const activeCustomers = customers.filter(c => c.active).map(c => c.name);
   return (
     <div className="p-7 pb-20 max-w-5xl mx-auto">
@@ -1575,41 +1574,40 @@ const Page1 = ({ data, onChange, modelName, onNext, dark, customers = [] }) => {
             <Input value={modelName} readOnly mono dark={dark} />
             <p className={`text-[11px] mt-1 ${dark?"text-neutral-600":"text-neutral-400"}`}>Auto-populated from Creo</p>
           </Field>
-          <Field label="Project Name" required dark={dark}>
+          <Field label="Project Name" dark={dark}>
             <Input value={data.projectName} onChange={e=>onChange("projectName",e.target.value)} placeholder="e.g. Q3-FRAME-2026" dark={dark} />
           </Field>
-          <Field label="Customer Name" required dark={dark}>
+          <Field label="Customer Name" dark={dark}>
             <Select value={data.customerName} onChange={e=>onChange("customerName",e.target.value)} dark={dark}
               options={activeCustomers} />
           </Field>
-          <Field label="AI Model" required dark={dark}>
+          <Field label="AI Model" dark={dark}>
             <Select value={data.aiModel} onChange={e=>onChange("aiModel",e.target.value)} dark={dark}
               options={["Annotator-V4 (Geometry Focus)","Drafting-Core-v2 (Standard)","DimGen-V3 (Dimensioning)","AutoNote-V1 (Annotations)"]} />
           </Field>
         </div>
       </Card>
       <div className="flex justify-end mt-5">
-        <BtnPrimary onClick={onNext} disabled={!valid}>Next: Product Draw →</BtnPrimary>
+        <BtnPrimary onClick={onNext}>Next: Product Draw →</BtnPrimary>
       </div>
     </div>
   );
 };
 
 const Page2 = ({ data, onChange, onNext, onBack, dark }) => {
-  const valid = data.partNumber&&data.noun&&data.designControl&&data.partType&&data.changeLvl&&data.version&&data.drawingClass&&data.unitMeas&&data.weight;
   const autoName = [data.noun,data.partType,data.modifier].filter(Boolean).join(" — ")||"—";
   return (
     <div className="p-7 pb-20 max-w-5xl mx-auto">
       <Card dark={dark}>
         <SectionTitle dark={dark} sub="Product Draw — Data Tab · Integration Package fields">Product Draw Details</SectionTitle>
         <div className="grid grid-cols-3 gap-x-5 gap-y-4">
-          <Field label="Part Number" required dark={dark}><Input value={data.partNumber} onChange={e=>onChange("partNumber",e.target.value)} placeholder="e.g. 551-4781" mono dark={dark}/></Field>
-          <Field label="Design Control" required dark={dark}><Select value={data.designControl} onChange={e=>onChange("designControl",e.target.value)} options={["HE210","HE100","HE300","HE400","HE500"]} dark={dark}/></Field>
-          <Field label="Part Type" required dark={dark}><Select value={data.partType} onChange={e=>onChange("partType",e.target.value)} options={["AS","MF","DW","PF","ST","CM"]} dark={dark}/></Field>
+          <Field label="Part Number" dark={dark}><Input value={data.partNumber} onChange={e=>onChange("partNumber",e.target.value)} placeholder="e.g. 551-4781" mono dark={dark}/></Field>
+          <Field label="Design Control" dark={dark}><Select value={data.designControl} onChange={e=>onChange("designControl",e.target.value)} options={["HE210","HE100","HE300","HE400","HE500"]} dark={dark}/></Field>
+          <Field label="Part Type" dark={dark}><Select value={data.partType} onChange={e=>onChange("partType",e.target.value)} options={["AS","MF","DW","PF","ST","CM"]} dark={dark}/></Field>
         </div>
         <Divider dark={dark}/>
         <div className="grid grid-cols-3 gap-x-5 gap-y-4">
-          <Field label="Noun" required dark={dark}><Select value={data.noun} onChange={e=>onChange("noun",e.target.value)} options={["FRAME","BRACKET","PLATE","SHAFT","HOUSING","COVER","SEAL","BEARING","BUSHING","GEAR"]} dark={dark}/></Field>
+          <Field label="Noun" dark={dark}><Select value={data.noun} onChange={e=>onChange("noun",e.target.value)} options={["FRAME","BRACKET","PLATE","SHAFT","HOUSING","COVER","SEAL","BEARING","BUSHING","GEAR"]} dark={dark}/></Field>
           <Field label="Modifier" dark={dark}><Select value={data.modifier} onChange={e=>onChange("modifier",e.target.value)} options={["","SKIRT","FRONT","REAR","UPPER","LOWER","INNER","OUTER","LEFT","RIGHT"]} dark={dark}/></Field>
           <Field label="Drawing Name Line 2" dark={dark}><Input value={data.drawingNameLine2} onChange={e=>onChange("drawingNameLine2",e.target.value)} placeholder="e.g. (RH)" dark={dark}/></Field>
         </div>
@@ -1619,15 +1617,15 @@ const Page2 = ({ data, onChange, onNext, onBack, dark }) => {
           <span className="text-sm font-bold text-red-600 font-mono">{autoName}</span>
         </div>
         <div className="grid grid-cols-3 gap-x-5 gap-y-4">
-          <Field label="Change Level" required dark={dark}><Input value={data.changeLvl} onChange={e=>onChange("changeLvl",e.target.value)} placeholder="e.g. 06" dark={dark}/></Field>
-          <Field label="Version" required dark={dark}><Select value={data.version} onChange={e=>onChange("version",e.target.value)} options={["HE","SE","PE","CE","DE"]} dark={dark}/></Field>
-          <Field label="Drawing Class" required dark={dark}><Select value={data.drawingClass} onChange={e=>onChange("drawingClass",e.target.value)} options={["PRODUCTION","PROTOTYPE","REFERENCE","OBSOLETE"]} dark={dark}/></Field>
+          <Field label="Change Level" dark={dark}><Input value={data.changeLvl} onChange={e=>onChange("changeLvl",e.target.value)} placeholder="e.g. 06" dark={dark}/></Field>
+          <Field label="Version" dark={dark}><Select value={data.version} onChange={e=>onChange("version",e.target.value)} options={["HE","SE","PE","CE","DE"]} dark={dark}/></Field>
+          <Field label="Drawing Class" dark={dark}><Select value={data.drawingClass} onChange={e=>onChange("drawingClass",e.target.value)} options={["PRODUCTION","PROTOTYPE","REFERENCE","OBSOLETE"]} dark={dark}/></Field>
         </div>
         <Divider dark={dark}/>
         <div className="grid grid-cols-3 gap-x-5 gap-y-4">
-          <Field label="Unit of Measure" required dark={dark}><Select value={data.unitMeas} onChange={e=>onChange("unitMeas",e.target.value)} options={["Piece","Meter","Kilogram","Liter","Set","Pair"]} dark={dark}/></Field>
-          <Field label="Weight Type" required dark={dark}><Select value={data.weightType} onChange={e=>onChange("weightType",e.target.value)} options={["ESTIMATE","CALCULATED","MEASURED","THEORETICAL"]} dark={dark}/></Field>
-          <Field label="Weight" required dark={dark}><Input value={data.weight} onChange={e=>onChange("weight",e.target.value)} placeholder="e.g. 190.6" dark={dark}/></Field>
+          <Field label="Unit of Measure" dark={dark}><Select value={data.unitMeas} onChange={e=>onChange("unitMeas",e.target.value)} options={["Piece","Meter","Kilogram","Liter","Set","Pair"]} dark={dark}/></Field>
+          <Field label="Weight Type" dark={dark}><Select value={data.weightType} onChange={e=>onChange("weightType",e.target.value)} options={["ESTIMATE","CALCULATED","MEASURED","THEORETICAL"]} dark={dark}/></Field>
+          <Field label="Weight" dark={dark}><Input value={data.weight} onChange={e=>onChange("weight",e.target.value)} placeholder="e.g. 190.6" dark={dark}/></Field>
         </div>
         <div className="mt-4"><Checkbox checked={data.overrideWeight} onChange={e=>onChange("overrideWeight",e.target.checked)} label="Override Weight" dark={dark}/></div>
         <Divider dark={dark}/>
@@ -1644,7 +1642,7 @@ const Page2 = ({ data, onChange, onNext, onBack, dark }) => {
           <Field label="R.P. Change Number" dark={dark}><Input value={data.rpChangeNumber} onChange={e=>onChange("rpChangeNumber",e.target.value)} placeholder="R.P. Change Number" dark={dark}/></Field>
         </div>
       </Card>
-      <NavRow onBack={onBack} onNext={onNext} nextLabel="Next: 1E Specs →" nextDisabled={!valid} dark={dark}/>
+      <NavRow onBack={onBack} onNext={onNext} nextLabel="Next: 1E Specs →" dark={dark}/>
     </div>
   );
 };
@@ -1710,7 +1708,7 @@ const Page3 = ({ data, onChange, onNext, onBack, dark }) => {
             <SectionTitle dark={dark}>Required Specs</SectionTitle>
             <div className="flex flex-col gap-3">
               {[["Drawing","drawing",["1E2722A","1E2300A","1E2100A"],true],["Branding","branding",["1E0198W","1E0199W","1E0200W"],true],["Confidentiality","confidentiality",["1E0013Y","1E0014Y","1E0015Y"],true],["Supplier Type","supplierType",["Customer 1","EXTERNAL","INTERNAL","OEM"],true]].map(([lbl,key,opts,req])=>(
-                <Field key={key} label={lbl} required={req} dark={dark}><Select value={reqSpecs[key]} onChange={e=>setReq(key,e.target.value)} options={opts} dark={dark}/></Field>
+                <Field key={key} label={lbl} dark={dark}><Select value={reqSpecs[key]} onChange={e=>setReq(key,e.target.value)} options={opts} dark={dark}/></Field>
               ))}
               <Field label="High Priority To Brand" dark={dark}>
                 <div className="flex gap-1.5">
@@ -1898,8 +1896,8 @@ export default function App() {
   const [submitting, setSubmitting] = useState(false);
   const [jobId,      setJobId]      = useState(null);
 
-  const [p1,setP1]=useState({customerName:"",aiModel:"",projectName:""});
-  const [p2,setP2]=useState({partNumber:"",noun:"",modifier:"",drawingNameLine2:"",changeLvl:"",designControl:"",partType:"",version:"",drawingClass:"",unitMeas:"",weightType:"",weight:"",overrideWeight:false,refPartNo:"",refVersion:"",drawingVersion:"PRIMARY",secChangeType:"",rpDrawingVersion:"",rpChangeNumber:""});
+  const [p1,setP1]=useState({customerName:"Customer 1",aiModel:"Annotator-V4 (Geometry Focus)",projectName:"Q3-FRAME-2026"});
+  const [p2,setP2]=useState({partNumber:"551-4781",noun:"FRAME",modifier:"SKIRT",drawingNameLine2:"(RH)",changeLvl:"06",designControl:"HE210",partType:"AS",version:"HE",drawingClass:"PRODUCTION",unitMeas:"Piece",weightType:"ESTIMATE",weight:"190.6",overrideWeight:false,refPartNo:"",refVersion:"",drawingVersion:"PRIMARY",secChangeType:"",rpDrawingVersion:"",rpChangeNumber:""});
   const [p3,setP3]=useState({specs:DEFAULT_SPECS,reqSpecs:{drawing:"1E2722A",branding:"1E0198W",confidentiality:"1E0013Y",supplierType:"Customer 1",highPriority:false},optSpecs:{ident:"1E0507E",apqp:"1E2966A"}});
 
   const ch1=(k,v)=>setP1(p=>({...p,[k]:v}));
@@ -1915,8 +1913,8 @@ export default function App() {
 
   const handleReset=()=>{
     setStep(1);setJobId(null);
-    setP1({customerName:"",aiModel:"",projectName:""});
-    setP2({partNumber:"",noun:"",modifier:"",drawingNameLine2:"",changeLvl:"",designControl:"",partType:"",version:"",drawingClass:"",unitMeas:"",weightType:"",weight:"",overrideWeight:false,refPartNo:"",refVersion:"",drawingVersion:"PRIMARY",secChangeType:"",rpDrawingVersion:"",rpChangeNumber:""});
+    setP1({customerName:"Customer 1",aiModel:"Annotator-V4 (Geometry Focus)",projectName:"Q3-FRAME-2026"});
+    setP2({partNumber:"551-4781",noun:"FRAME",modifier:"SKIRT",drawingNameLine2:"(RH)",changeLvl:"06",designControl:"HE210",partType:"AS",version:"HE",drawingClass:"PRODUCTION",unitMeas:"Piece",weightType:"ESTIMATE",weight:"190.6",overrideWeight:false,refPartNo:"",refVersion:"",drawingVersion:"PRIMARY",secChangeType:"",rpDrawingVersion:"",rpChangeNumber:""});
     setP3({specs:DEFAULT_SPECS,reqSpecs:{drawing:"1E2722A",branding:"1E0198W",confidentiality:"1E0013Y",supplierType:"Customer 1",highPriority:false},optSpecs:{ident:"1E0507E",apqp:"1E2966A"}});
   };
 
