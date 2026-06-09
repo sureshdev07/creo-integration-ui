@@ -1550,16 +1550,16 @@ const Stepper = ({ current, dark }) => (
 
 // ─── DEFAULT SPECS ────────────────────────────────────────────────────────────
 const DEFAULT_SPECS = [
-  { id:1,  spec:"1E5167A", desc:"INT-PROP",        note:"",  type:"General" },
-  { id:2,  spec:"1E4436",  desc:"SURF. APPEARANCE", note:"D", type:"General" },
-  { id:3,  spec:"1E2966A", desc:"IDENT",            note:"",  type:"General" },
-  { id:4,  spec:"1E2722A", desc:"DRAWING",          note:"",  type:"General" },
-  { id:5,  spec:"1E2391",  desc:"DIM. CONT",        note:"",  type:"General" },
-  { id:6,  spec:"1E0507E", desc:"IDENT",            note:"",  type:"General" },
-  { id:7,  spec:"1E0198W", desc:"BRAND MARKINGS",   note:"",  type:"General" },
-  { id:8,  spec:"1E0099S", desc:"WELDING",          note:"",  type:"General" },
-  { id:9,  spec:"1E0013Y", desc:"CONFIDENTIALITY",  note:"",  type:"General" },
-  { id:10, spec:"1E0012A", desc:"INTERPRETATION",   note:"",  type:"General" },
+  { id:1,  spec:"DRW-SPEC-001", desc:"INT-PROP",        note:"",  type:"General" },
+  { id:2,  spec:"DRW-SPEC-002",  desc:"SURF. APPEARANCE", note:"D", type:"General" },
+  { id:3,  spec:"DRW-SPEC-003", desc:"IDENT",            note:"",  type:"General" },
+  { id:4,  spec:"DRW-SPEC-004", desc:"DRAWING",          note:"",  type:"General" },
+  { id:5,  spec:"DRW-SPEC-005",  desc:"DIM. CONT",        note:"",  type:"General" },
+  { id:6,  spec:"DRW-SPEC-006", desc:"IDENT",            note:"",  type:"General" },
+  { id:7,  spec:"DRW-SPEC-007", desc:"BRAND MARKINGS",   note:"",  type:"General" },
+  { id:8,  spec:"DRW-SPEC-008", desc:"WELDING",          note:"",  type:"General" },
+  { id:9,  spec:"DRW-SPEC-009", desc:"CONFIDENTIALITY",  note:"",  type:"General" },
+  { id:10, spec:"DRW-SPEC-010", desc:"INTERPRETATION",   note:"",  type:"General" },
 ];
 
 // ─── WORKFLOW PAGES (1-5) ─────────────────────────────────────────────────────
@@ -1649,8 +1649,8 @@ const Page2 = ({ data, onChange, onNext, onBack, dark }) => {
 
 const Page3 = ({ data, onChange, onNext, onBack, dark }) => {
   const specs    = data.specs    || DEFAULT_SPECS;
-  const reqSpecs = data.reqSpecs || { drawing:"1E2722A",branding:"1E0198W",confidentiality:"1E0013Y",supplierType:"Customer 1",highPriority:false };
-  const optSpecs = data.optSpecs || { ident:"1E0507E",apqp:"1E2966A" };
+  const reqSpecs = data.reqSpecs || { drawing:"DRW-SPEC-004",branding:"DRW-SPEC-007",confidentiality:"DRW-SPEC-009",supplierType:"Customer 1",highPriority:false };
+  const optSpecs = data.optSpecs || { ident:"DRW-SPEC-006",apqp:"DRW-SPEC-003" };
   const [newSpec, setNewSpec] = useState("");
   const [sel, setSel] = useState(null);
   const upd = v  => onChange("specs", v);
@@ -1707,7 +1707,7 @@ const Page3 = ({ data, onChange, onNext, onBack, dark }) => {
           <Card dark={dark} className="!p-4">
             <SectionTitle dark={dark}>Required Specs</SectionTitle>
             <div className="flex flex-col gap-3">
-              {[["Drawing","drawing",["1E2722A","1E2300A","1E2100A"]],["Branding","branding",["1E0198W","1E0199W","1E0200W"]],["Confidentiality","confidentiality",["1E0013Y","1E0014Y","1E0015Y"]],["Supplier Type","supplierType",["Customer 1","EXTERNAL","INTERNAL","OEM"]]].map(([lbl,key,opts])=>(
+              {[["Drawing","drawing",["DRW-SPEC-004","DRW-SPEC-004B","DRW-SPEC-004C"]],["Branding","branding",["DRW-SPEC-007","DRW-SPEC-007B","DRW-SPEC-007C"]],["Confidentiality","confidentiality",["DRW-SPEC-009","DRW-SPEC-009B","DRW-SPEC-009C"]],["Supplier Type","supplierType",["Customer 1","EXTERNAL","INTERNAL","OEM"]]].map(([lbl,key,opts])=>(
                 <Field key={key} label={lbl} dark={dark}><Select value={reqSpecs[key]} onChange={e=>setReq(key,e.target.value)} options={opts} dark={dark}/></Field>
               ))}
               <Field label="High Priority To Brand" dark={dark}>
@@ -1724,7 +1724,7 @@ const Page3 = ({ data, onChange, onNext, onBack, dark }) => {
           <Card dark={dark} className="!p-4">
             <SectionTitle dark={dark}>Optional Specs</SectionTitle>
             <div className="flex flex-col gap-3">
-              {[["Ident","ident",["1E0507E","1E0508E","1E0509E"]],["APQP?","apqp",["1E2966A","1E2967A","1E2968A"]]].map(([lbl,key,opts])=>(
+              {[["Ident","ident",["DRW-SPEC-006","DRW-SPEC-006B","DRW-SPEC-006C"]],["APQP?","apqp",["DRW-SPEC-003","DRW-SPEC-003B","DRW-SPEC-003C"]]].map(([lbl,key,opts])=>(
                 <Field key={key} label={lbl} dark={dark}><Select value={optSpecs[key]} onChange={e=>setOpt(key,e.target.value)} options={opts} dark={dark}/></Field>
               ))}
             </div>
@@ -1898,7 +1898,7 @@ export default function App() {
 
   const [p1,setP1]=useState({customerName:"Customer 1",aiModel:"Annotator-V4 (Geometry Focus)",projectName:"Q3-FRAME-2026"});
   const [p2,setP2]=useState({partNumber:"551-4781",noun:"FRAME",modifier:"SKIRT",drawingNameLine2:"(RH)",changeLvl:"06",designControl:"HE210",partType:"AS",version:"HE",drawingClass:"PRODUCTION",unitMeas:"Piece",weightType:"ESTIMATE",weight:"190.6",overrideWeight:false,refPartNo:"",refVersion:"",drawingVersion:"PRIMARY",secChangeType:"",rpDrawingVersion:"",rpChangeNumber:""});
-  const [p3,setP3]=useState({specs:DEFAULT_SPECS,reqSpecs:{drawing:"1E2722A",branding:"1E0198W",confidentiality:"1E0013Y",supplierType:"Customer 1",highPriority:false},optSpecs:{ident:"1E0507E",apqp:"1E2966A"}});
+  const [p3,setP3]=useState({specs:DEFAULT_SPECS,reqSpecs:{drawing:"DRW-SPEC-004",branding:"DRW-SPEC-007",confidentiality:"DRW-SPEC-009",supplierType:"Customer 1",highPriority:false},optSpecs:{ident:"DRW-SPEC-006",apqp:"DRW-SPEC-003"}});
 
   const ch1=(k,v)=>setP1(p=>({...p,[k]:v}));
   const ch2=(k,v)=>setP2(p=>({...p,[k]:v}));
@@ -1915,7 +1915,7 @@ export default function App() {
     setStep(1);setJobId(null);
     setP1({customerName:"Customer 1",aiModel:"Annotator-V4 (Geometry Focus)",projectName:"Q3-FRAME-2026"});
     setP2({partNumber:"551-4781",noun:"FRAME",modifier:"SKIRT",drawingNameLine2:"(RH)",changeLvl:"06",designControl:"HE210",partType:"AS",version:"HE",drawingClass:"PRODUCTION",unitMeas:"Piece",weightType:"ESTIMATE",weight:"190.6",overrideWeight:false,refPartNo:"",refVersion:"",drawingVersion:"PRIMARY",secChangeType:"",rpDrawingVersion:"",rpChangeNumber:""});
-    setP3({specs:DEFAULT_SPECS,reqSpecs:{drawing:"1E2722A",branding:"1E0198W",confidentiality:"1E0013Y",supplierType:"Customer 1",highPriority:false},optSpecs:{ident:"1E0507E",apqp:"1E2966A"}});
+    setP3({specs:DEFAULT_SPECS,reqSpecs:{drawing:"DRW-SPEC-004",branding:"DRW-SPEC-007",confidentiality:"DRW-SPEC-009",supplierType:"Customer 1",highPriority:false},optSpecs:{ident:"DRW-SPEC-006",apqp:"DRW-SPEC-003"}});
   };
 
   const pp={dark};
